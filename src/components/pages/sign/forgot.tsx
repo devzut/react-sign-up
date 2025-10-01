@@ -9,44 +9,36 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { InputText } from "@/components/forms/input-text";
-import { InputPassword } from "@/components/forms/input-password";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userLogin } from "@/components/pages/sign/services/login";
-import { type UserLoginData } from "@/components/pages/sign/services/login";
-
-interface UserFormInput {
-  email: string;
-  password: string;
-}
+import { forgotPassword } from "@/components/pages/sign/services/forgot";
+import { type ForgotPasswordData } from "@/components/pages/sign/services/forgot";
 
 const validationSchema = z
   .object({
     email: z.string().email("Please enter a valid email"),
-    password: z
-      .string()
   })
   .required();
 
-export function SignIn() {
-  const onSubmit = async (data: UserLoginData) => {
+export function Forgot() {
+  const onSubmit = async (data: ForgotPasswordData) => {
     console.log("Sending data to the API:", data);
-    await userLogin(data);
+    await forgotPassword(data);
   };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserFormInput>({
+  } = useForm<ForgotPasswordData>({
     resolver: zodResolver(validationSchema),
   });
 
   return (
     <Card className="w-70">
       <CardHeader>
-        <CardTitle className="text-center text-2xl">Sign In</CardTitle>
+        <CardTitle className="text-center text-2xl">Remind Password</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex">
@@ -65,20 +57,9 @@ export function SignIn() {
                 error={errors.email?.message}
               />
             </div>
-            <div className="">
-              <Label className="pb-2" htmlFor="password">
-                Password:
-              </Label>
-              <InputPassword
-                className="rounded-lg"
-                id="password"
-                fieldRegister={register("password")}
-                error={errors.email?.message}
-              />
-            </div>
             <div>
               <Button type="submit" className="w-full rounded-lg">
-                Login
+                Reset Password
               </Button>
             </div>
           </form>
@@ -89,11 +70,6 @@ export function SignIn() {
           Don't have account?{" "}
           <Link to="/create">
             <span className="text-(--primary)">Sign Up</span>
-          </Link>
-        </p>
-        <p className="text-sm absolute mt-15">
-          <Link to="/forgot">
-            <span className=" text-(--primary)">Forgot your password?</span>
           </Link>
         </p>
       </CardFooter>
