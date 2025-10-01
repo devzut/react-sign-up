@@ -237,6 +237,17 @@ button:focus-visible {
   width: 100%;
 }
 
+.eye-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 15px;
+  position: absolute;
+  right: 24px;
+  top: 12px;
+  z-index: 5;
+  cursor: pointer;
+}
+
 
 
 
